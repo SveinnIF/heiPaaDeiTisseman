@@ -62,14 +62,12 @@ public class UniverseCSVRepository implements IUniverseRepository{
             for (PlanetSystem planetSystem : planetSystems) {
                 ArrayList<Planet> planets = planetSystem.getPlanets();
                 for (Planet planet : planets) {
-                    String line = planetSystem.getName() + planetSystem.getPictureUrl() + planetSystem.getCenterStar() + planetSystem.getPlanets();
+                    String line = planetSystem.getName() + planetSystem.getPictureUrl() + planetSystem.getCenterStar() + planet;
                     bufferedWriter.write(line);
                     bufferedWriter.newLine();
-                    bufferedWriter.flush();
                 }
-
             }
-
+            bufferedWriter.flush();
         } catch (FileNotFoundException fnfe) {
         System.out.println(fnfe.getMessage());
         } catch (IOException ioexc) {
