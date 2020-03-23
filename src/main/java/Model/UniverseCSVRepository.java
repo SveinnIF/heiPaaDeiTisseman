@@ -7,7 +7,6 @@ import java.util.List;
 
 public class UniverseCSVRepository implements IUniverseRepository{
     private ArrayList<PlanetSystem> planetSystems = new ArrayList<>();
-    private List<Planet> planetList = new ArrayList<>();
     public UniverseCSVRepository(){
 
         Star sun = new Star("The Sun", 1.9885E30, 695342, 5777, "https://upload.wikimedia.org/wikipedia/commons/c/c3/Solar_sys8.jpg");
@@ -66,8 +65,11 @@ public class UniverseCSVRepository implements IUniverseRepository{
                     String line = planetSystem.getName() + planetSystem.getPictureUrl() + planetSystem.getCenterStar() + planetSystem.getPlanets();
                     bufferedWriter.write(line);
                     bufferedWriter.newLine();
+                    bufferedWriter.flush();
                 }
+
             }
+
         } catch (FileNotFoundException fnfe) {
         System.out.println(fnfe.getMessage());
         } catch (IOException ioexc) {
