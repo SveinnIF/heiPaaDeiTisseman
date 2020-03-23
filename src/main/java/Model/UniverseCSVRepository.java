@@ -9,7 +9,7 @@ public class UniverseCSVRepository implements IUniverseRepository{
     private ArrayList<PlanetSystem> planetSystems = new ArrayList<>();
     public UniverseCSVRepository(){
 
-        Star sun = new Star("The Sun", 1.9885E30, 695342, 5777, "https://upload.wikimedia.org/wikipedia/commons/c/c3/Solar_sys8.jpg");
+        Star sun = new Star("The Sun", 1.9885E30, 695342, 5777, "https://en.wikipedia.org/wiki/Sun#/media/File:Sun_white.jpg");
         ArrayList<Planet> planetList = new ArrayList<>();
         planetList.add(new Planet("Mercury", 3.283E23, 2439.7, 0.387, 0.206, 88, sun, "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Transit_Of_Mercury%2C_May_9th%2C_2016.png/480px-Transit_Of_Mercury%2C_May_9th%2C_2016.png"));
         planetList.add(new Planet("Venus", 4.867E24, 6051.8, 0.723, 0.007, 225, sun, "https://upload.wikimedia.org/wikipedia/commons/e/e5/Venus-real_color.jpg"));
@@ -62,7 +62,7 @@ public class UniverseCSVRepository implements IUniverseRepository{
             for (PlanetSystem planetSystem : planetSystems) {
                 ArrayList<Planet> planets = planetSystem.getPlanets();
                 for (Planet planet : planets) {
-                    String line = planetSystem.getName() + planetSystem.getPictureUrl() + planetSystem.getCenterStar() + planet;
+                    String line = planetSystem.getName() + "," + planetSystem.getPictureUrl() + "," + planetSystem.getCenterStar() + planet;
                     bufferedWriter.write(line);
                     bufferedWriter.newLine();
                 }

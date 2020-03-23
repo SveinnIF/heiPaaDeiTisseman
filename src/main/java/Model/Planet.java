@@ -9,6 +9,7 @@ public class Planet extends NaturalSatellite {
 
     @Override
     public String toString() {
-        return "\n" + super.getName() + ": has a mass of: " + super.getMass() + " kg, and a radius of: " + super.getRadius() + "km";
+        return super.getName() + "," + super.getMass() + "," + super.getRadius() + "," + super.getSemiMajorAxis() + "," + super.getEccentricity() + "," + super.getOrbitalPeriod() + "," + super.getPictureUrl();
+        // <planet name>, <planet mass>, <planet radius>, <planet semi-major axis>,<planet eccentricity>, <planet orbital period>, <planet image url>
     }
 }
