@@ -2,8 +2,8 @@ package Model;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 
 public class UniverseCSVRepository implements IUniverseRepository{
     //private ArrayList<PlanetSystem> planetSystems = new ArrayList<>();
@@ -32,7 +32,7 @@ public class UniverseCSVRepository implements IUniverseRepository{
     }
 
     public static ArrayList<PlanetSystem> readPlanetFromFile(String file, HashMap<String, PlanetSystem> planetsFromFile) {
-
+        planetsFromFile = new HashMap<>();
 
         try{
             BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
@@ -65,7 +65,10 @@ public class UniverseCSVRepository implements IUniverseRepository{
             for (PlanetSystem planetSystem : planetSystems.values()) {
                 ArrayList<Planet> planets = planetSystem.getPlanets();
                 for (Planet planet : planets) {
-                    String line = planetSystem.getName() + "," + planetSystem.getPictureUrl() + "," + planetSystem.getCenterStar() + planet;
+                    String line = planetSystem.getName() + "," + planetSystem.getPictureUrl() + "," + planetSystem.getCenterStar().getName() + "," + planetSystem.getCenterStar().getMass() +
+                            "," + planetSystem.getCenterStar().getRadius() + "," + planetSystem.getCenterStar().getEffectiveTemp() + "," + planetSystem.getCenterStar().getPictureUrl() + "," +
+                            planet.getName() + "," + planet.getMass() + "," + planet.getRadius() + "," + planet.getSemiMajorAxis() + "," + planet.getEccentricity() + "," + planet.getOrbitalPeriod() +
+                            "," + planet.getPictureUrl();;
                     bufferedWriter.write(line);
                     bufferedWriter.newLine();
                 }
@@ -90,7 +93,7 @@ public class UniverseCSVRepository implements IUniverseRepository{
 
     @Override
     public PlanetSystem getPlanetSystem(String solarSystemName) {
-        for (PlanetSystem planetSystem : planetSystemsHashMap.value()) {
+        for (PlanetSystem planetSystem : planetSystemsHashMap.values()) {
             if (planetSystem.getName().equals(solarSystemName)) {
                 return planetSystem;
             }
@@ -99,15 +102,15 @@ public class UniverseCSVRepository implements IUniverseRepository{
     }
 
     @Override
-    public HashMap<String,PlanetSystem> getAllPlanetSystems() {
-        return  planetSystemsHashMap;
+    public Collection<PlanetSystem> getAllPlanetSystems() {
+        return  planetSystemsHashMap.values();
     }
 
-    public ArrayList<PlanetSystem> getPlanetSystems() {
-        return planetSystems;
+    public void /*PlanetSystem*/ getPlanetSystems(String planetSystem) {
+        //return planetSystemsHashMap;
     }
 
     public void setPlanetSystems(ArrayList<PlanetSystem> planetSystems) {
-        this.planetSystems = planetSystems;
+        //this.planetSystems = planetSystems;
     }
 }

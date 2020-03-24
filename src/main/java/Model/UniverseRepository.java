@@ -1,10 +1,7 @@
 package Model;
 
-import org.w3c.dom.ls.LSOutput;
-
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.HashMap;
+import java.util.Collection;
 
 public class UniverseRepository implements IUniverseRepository {
     private ArrayList<PlanetSystem> planetSystems = new ArrayList<>();
@@ -62,7 +59,7 @@ public class UniverseRepository implements IUniverseRepository {
     }
 
     @Override
-    public ArrayList<PlanetSystem> getAllPlanetSystems() {
+    public Collection<PlanetSystem> getAllPlanetSystems() {
         return planetSystems;
     }
 

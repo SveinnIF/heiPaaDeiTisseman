@@ -38,8 +38,8 @@ public class PlanetSystemController {
     }
 
     public void getAllPlanetSystems(Context context) {
-        ArrayList<PlanetSystem> allPlanetSystems = UniverseJSONRepository.getAllPlanetSystems();
-        context.json(allPlanetSystems);
+       // ArrayList<PlanetSystem> allPlanetSystems = UniverseJSONRepository.getAllPlanetSystems();
+        //context.json(allPlanetSystems);
     }
 
     public void getSinglePlanet(Context context){

@@ -12,6 +12,6 @@ public class Star extends CelestialBody {
 
     @Override
     public String toString() {
-        return super.getName() + "," + super.getMass() + "," + super.getRadius() + "," + super.getEffectiveTemp() + "," + super.getPictureUrl() + ",";
+        return super.getName() + " has a mass of: " + super.getMass() + ", and a radius of: " + super.getRadius() + ", and a temperature of: " + super.getEffectiveTemp();
     }
 }

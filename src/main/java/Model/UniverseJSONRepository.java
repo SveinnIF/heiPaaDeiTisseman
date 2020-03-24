@@ -4,10 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class UniverseJSONRepository implements IUniverseRepository{
 
@@ -87,7 +84,7 @@ public class UniverseJSONRepository implements IUniverseRepository{
     }
 
     @Override
-    public ArrayList<PlanetSystem> getAllPlanetSystems() {
+    public Collection<PlanetSystem> getAllPlanetSystems() {
         return planetSystems;
     }
 
