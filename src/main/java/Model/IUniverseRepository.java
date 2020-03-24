@@ -9,7 +9,7 @@ public interface IUniverseRepository {
     Planet getPlanet(String solarSystemName, String planetName);
     PlanetSystem getPlanetSystem(String solarSystemName);
     Collection<PlanetSystem> getAllPlanetSystems();
-    Planet createPlanet(String name, double mass, double radius, double semiMajorAxis, double eccentricity, double orbitalPeriod,Star centralCelestialBody, String pictureUrl, PlanetSystem planetSystem);
-    Planet updatePlanet();
-    void deletePlanet(String planetSystem,String planet);
+    void createPlanet(String name, double mass, double radius, double semiMajorAxis, double eccentricity, double orbitalPeriod, Star centralCelestialBody, String pictureUrl, PlanetSystem planetSystem);
+    static void updatePlanet(){}
+    static void deletePlanet(String planetSystem, String planet){}
 }

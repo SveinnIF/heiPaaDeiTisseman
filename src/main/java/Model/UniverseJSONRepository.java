@@ -85,13 +85,13 @@ public class UniverseJSONRepository implements IUniverseRepository{
     }
 
     @Override
-    public Planet createPlanet(String name, double mass, double radius, double semiMajorAxis, double eccentricity, double orbitalPeriod, Star centralCelestialBody, String pictureUrl, PlanetSystem planetSystem) {
-        return null;
+    public void createPlanet(String name, double mass, double radius, double semiMajorAxis, double eccentricity, double orbitalPeriod, Star centralCelestialBody, String pictureUrl, PlanetSystem planetSystem) {
+
     }
 
     @Override
-    public Planet updatePlanet() {
-        return null;
+    public void updatePlanet() {
+
     }
 
     @Override

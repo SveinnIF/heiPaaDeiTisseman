@@ -22,6 +22,7 @@ public class Application {
         app.get("/api/planet-systems/", planetSystemController::getAllPlanetSystems);
         app.get("/api/planet-systems/:planet-system-id/planets/:planet-id",planetSystemController::getSinglePlanet);
         app.get("/api/planet-systems/:planet-system-id/planets",planetSystemController::getAllPlanets);
+        app.get("/api/planet-systems/:planet-system-id/planets/:planet-id/delete",planetSystemController::removePlanet);
 
         app.get("/", ctx -> ctx.result("Hello, world"));
 

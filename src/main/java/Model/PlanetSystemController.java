@@ -56,4 +56,10 @@ public class PlanetSystemController {
         context.json(system);
     }
 
+    public void removePlanet(Context context){
+        String systemId = context.pathParam(":planet-system-id");
+        String planetId = context.pathParam(":planet-id");
+        UniverseCSVRepository.deletePlanet(systemId,planetId);
+    }
+
 }
