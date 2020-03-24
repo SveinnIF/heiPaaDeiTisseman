@@ -30,17 +30,15 @@ public class UniverseCSVRepository implements IUniverseRepository{
         System.out.println(readPlanets);
         System.out.println("////end of planets read from file////");
         writePlanetToFile("planets.csv",planetSystemsHashMap);
-        System.out.println("getAllPlanets: ");
-        System.out.println(getAllPlanets("Solar System"));
-        deletePlanet("Solar System", "Earth");
-        System.out.println("getPlanet: ");
-        System.out.println(getPlanet("Solar System", "Earth"));
-        System.out.println("getPlanetSystem: ");
-        System.out.println(getPlanetSystem("Solar System"));
-        System.out.println("getAllPlanetSystems: ");
-        System.out.println(getAllPlanetSystems());
-
-
+//        System.out.println("getAllPlanets: ");
+//        System.out.println(getAllPlanets("Solar System"));
+//        //deletePlanet("Solar System", "Earth");
+//        System.out.println("getPlanet: ");
+//        System.out.println(getPlanet("Solar System", "Earth"));
+//        System.out.println("getPlanetSystem: ");
+//        System.out.println(getPlanetSystem("Solar System"));
+//        System.out.println("getAllPlanetSystems: ");
+//        System.out.println(getAllPlanetSystems());
     }
 
     public static ArrayList<PlanetSystem> readPlanetFromFile(String file) {
@@ -103,7 +101,6 @@ public class UniverseCSVRepository implements IUniverseRepository{
     public Planet getPlanet(String solarSystemName, String planetName) {
         return planetSystemsHashMap.get(solarSystemName).getPlanet(planetName);
     }
-
 
     @Override
     public PlanetSystem getPlanetSystem(String solarSystemName) {

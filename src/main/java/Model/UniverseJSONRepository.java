@@ -27,9 +27,8 @@ public class UniverseJSONRepository implements IUniverseRepository{
         writeToFile("planets.json",planetSystems);
 
         List<PlanetSystem> readPlanets = readFromFile("planets.json");
+        System.out.println("planets read from JSON: ");
         System.out.println(readPlanets);
-        System.out.println("from json: ");
-        System.out.println(getAllPlanetSystems());
     }
 
     public List<Planet> getPlanetList() {

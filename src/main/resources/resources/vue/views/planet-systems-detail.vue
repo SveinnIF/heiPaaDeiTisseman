@@ -4,12 +4,11 @@
             <img v-if="planetSystem.pictureUrl" class="cover-image" v-bind:src="planetSystem.pictureUrl">
             <img v-else class="cover-image" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Icon-round-Question_mark.svg/480px-Icon-round-Question_mark.svg.png">
 
-            {{console.log(planetSystem.name)}}
-            {{console.log(planetSystem)}}
-            {{console.log(planets.length)}}
+            {{console.log(this.planetSystem)}}
 
             <h1>{{planetSystem.name}}</h1>
             <p>The {{planetSystem.name}} has {{planets.length}} planets revolving around the star {{star.name}}.</p>
+            <p><a class="button" class="add" :href="`/planet-systems/${planetSystem.name}/createplanet`">Create New Planet</a></p>
         </div>
 
         <ul id="sortList">
@@ -96,8 +95,6 @@
         border: 2px solid white;
     }
 
-
-
     div.detail-planet-system-container{
         padding: 10px;
         overflow: hidden;
@@ -163,6 +160,24 @@
         height:100px;
         text-decoration: none;
         color:black;
+    }
+
+    .button {
+        padding: 10px;
+        margin: 10px;
+        border: 1px solid white;
+        color: white;
+        border-radius: 15px;
+    }
+
+    button a{
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .button:hover{
+        border: 2px solid white;
     }
 
 </style>

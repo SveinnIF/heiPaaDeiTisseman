@@ -2,10 +2,16 @@
     <div v-if="planet" class="detail-planet-container">
         {{console.log(this.planet)}}
         <h1>{{planet.name}}</h1>
-        <img v-bind:src="planet.pictureUrl" />
+        <img v-if="planet.pictureUrl" class="cover-image" v-bind:src="planet.pictureUrl">
+        <img v-else class="cover-image" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Icon-round-Question_mark.svg/480px-Icon-round-Question_mark.svg.png">
+
         <p>The mass of {{planet.name}} is {{planet.mass}} kg, it has a radius of {{planet.radius}} km,
             the eccentricity or the deviation of orbit is from a circularity is {{planet.eccentricity}}.</p>
         <p>It spins around the star {{planet.centralCelestialBody.name}} with an orbiting period of {{planet.orbitalPeriod}} days.</p>
+        <p>
+            <a class="button" :href="`/api/planet-systems/${planetSystemName}/planets/${planet.name}/delete`">Delete</a>
+            <a class="button" :href="`/planet-systems/${planetSystemName}/planets/${planet.name}/update`">Edit</a>
+        </p>
     </div>
 </template>
 <script>
@@ -13,13 +19,14 @@
         template: "#planet-detail",
         data: () => ({
             planet: null,
+            planetSystemName: "",
         }),
         created() {
             const planetSystemId = this.$javalin.pathParams["planet-system-id"];
+            this.planetSystemName = planetSystemId;
             console.log("Planet system id: " + planetSystemId);
             const planetId = this.$javalin.pathParams["planet-id"];
             fetch(`/api/planet-systems/${planetSystemId}/planets/${planetId}`)
-
                 .then(res => res.json())
                 .then(res => this.planet = res)
                 .catch(() => alert("Error while fetching planet"));
@@ -51,6 +58,24 @@
         height: 320px;
         width: 320px;
         padding-bottom: 20px;
+    }
+
+    .button {
+        padding: 10px;
+        margin: 10px;
+        border: 1px solid white;
+        color: white;
+        border-radius: 15px;
+    }
+
+    button a{
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .button:hover{
+        border: 2px solid white;
     }
 
 </style>

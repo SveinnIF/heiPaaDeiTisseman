@@ -4,8 +4,6 @@ import io.javalin.http.Context;
 
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
 
 public class PlanetSystemController {
@@ -19,8 +17,9 @@ public class PlanetSystemController {
         String systemId = context.pathParam(":planet-system-id");
         String sortBy = context.queryParam("sort_by");
 
-        ArrayList<Planet> allPlanets = universeRepository.getAllPlanets(systemId); //i think it is because this is not a copy, this is the actual array that i am sorting and when i press null it
-                                                                                   //just prints the already sortet array
+        ArrayList<Planet> allPlanets = universeRepository.getAllPlanets(systemId);
+
+
         if (sortBy != null) {
             switch (sortBy) {
                 case "name":
@@ -34,12 +33,11 @@ public class PlanetSystemController {
                     break;
             }
         }
-
         context.json(allPlanets);
     }
 
     public void getAllPlanetSystems(Context context) {
-        Collection<PlanetSystem> allPlanetSystems = universeRepository.getAllPlanetSystems();
+        ArrayList<PlanetSystem> allPlanetSystems = new ArrayList<PlanetSystem>(universeRepository.getAllPlanetSystems());
         context.json(allPlanetSystems);
     }
 
