@@ -28,7 +28,8 @@ public class UniverseJSONRepository implements IUniverseRepository{
 
         List<PlanetSystem> readPlanets = readFromFile("planets.json");
         System.out.println(readPlanets);
-
+        System.out.println("from json: ");
+        System.out.println(getAllPlanetSystems());
     }
 
     public List<Planet> getPlanetList() {
@@ -82,6 +83,7 @@ public class UniverseJSONRepository implements IUniverseRepository{
 
         return null;
     }
+
 
     @Override
     public Collection<PlanetSystem> getAllPlanetSystems() {

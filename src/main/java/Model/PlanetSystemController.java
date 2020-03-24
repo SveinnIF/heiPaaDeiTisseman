@@ -4,6 +4,7 @@ import io.javalin.http.Context;
 
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 
@@ -38,8 +39,8 @@ public class PlanetSystemController {
     }
 
     public void getAllPlanetSystems(Context context) {
-       // ArrayList<PlanetSystem> allPlanetSystems = UniverseJSONRepository.getAllPlanetSystems();
-        //context.json(allPlanetSystems);
+        Collection<PlanetSystem> allPlanetSystems = UniverseJSONRepository.getAllPlanetSystems();
+        context.json(allPlanetSystems);
     }
 
     public void getSinglePlanet(Context context){

@@ -22,17 +22,27 @@ public class UniverseCSVRepository implements IUniverseRepository{
         planetList.add(new Planet("Neptune", 1.024E26, 24622, 30.11, 0.010, 60225, sun, "https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Neptune_Full_%28cropped%29.jpg/480px-Neptune_Full_%28cropped%29.jpg"));
 
         PlanetSystem solarSystem = new PlanetSystem("Solar System", sun, planetList, "https://upload.wikimedia.org/wikipedia/commons/c/c3/Solar_sys8.jpg");
-        //planetSystems.add(solarSystem);
 
         planetSystemsHashMap.put("Solar System", solarSystem);
 
-        ArrayList<PlanetSystem> readPlanets = readPlanetFromFile("planets_100.csv",planetSystemsHashMap);
+        ArrayList<PlanetSystem> readPlanets = readPlanetFromFile("planets_100.csv");
+        System.out.println("planets read from file: ");
         System.out.println(readPlanets);
+        System.out.println("////end of planets read from file////");
         writePlanetToFile("planets.csv",planetSystemsHashMap);
+        System.out.println("getAllPlanets: ");
+        System.out.println(getAllPlanets("Solar System"));
+        System.out.println("getPlanet: ");
+        System.out.println(getPlanet("Solar System", "Earth"));
+        System.out.println("getPlanetSystem: ");
+        System.out.println(getPlanetSystem("Solar System"));
+        System.out.println("getAllPlanetSystems: ");
+        System.out.println(getAllPlanetSystems());
+
     }
 
-    public static ArrayList<PlanetSystem> readPlanetFromFile(String file, HashMap<String, PlanetSystem> planetsFromFile) {
-        planetsFromFile = new HashMap<>();
+    public static ArrayList<PlanetSystem> readPlanetFromFile(String file) {
+        HashMap<String, PlanetSystem> planetsFromFile = new HashMap<>();
 
         try{
             BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
@@ -44,10 +54,10 @@ public class UniverseCSVRepository implements IUniverseRepository{
 
                 if (!planetsFromFile.containsKey(splitter[0])) {
                     planetsFromFile.put(splitter[0], new PlanetSystem(splitter[0], new Star(splitter[2], Double.parseDouble(splitter[3]),
-                            Double.parseDouble(splitter[4]), Double.parseDouble(splitter[5]), splitter[6]), new ArrayList<Planet>(), splitter[1]));
+                            Double.parseDouble(splitter[4]), Double.parseDouble(splitter[5]), splitter[6]), new ArrayList<>(), splitter[1]));
                 }
                 planetsFromFile.get(splitter[0]).getPlanetList().add(new Planet(splitter[7], Double.parseDouble(splitter[8]), Double.parseDouble(splitter[9]),
-                        Double.parseDouble(splitter[10]), Double.parseDouble(splitter[11]), Double.parseDouble(splitter[12]),planetsFromFile.get(splitter[0]).getCenterStar(), splitter[13]));
+                        Double.parseDouble(splitter[10]), Double.parseDouble(splitter[11]), Double.parseDouble(splitter[12]), planetsFromFile.get(splitter[0]).getCenterStar(), splitter[13]));
             }
 
         } catch (FileNotFoundException fnfe) {
@@ -55,7 +65,7 @@ public class UniverseCSVRepository implements IUniverseRepository{
         } catch (IOException ioexc) {
             System.out.println(ioexc.getLocalizedMessage());
         }
-        return new ArrayList<PlanetSystem>(planetsFromFile.values());
+        return new ArrayList<>(planetsFromFile.values());
     }
 
     public void writePlanetToFile(String file, HashMap<String,PlanetSystem> planetSystems){
@@ -81,24 +91,21 @@ public class UniverseCSVRepository implements IUniverseRepository{
         }
     }
 
+
     @Override
     public ArrayList<Planet> getAllPlanets(String solarSystemName) {
-        return getPlanetSystem(solarSystemName).getPlanets();
+        return planetSystemsHashMap.get(solarSystemName).getPlanets();
     }
 
     @Override
     public Planet getPlanet(String solarSystemName, String planetName) {
-        return getPlanetSystem(solarSystemName).getPlanet(planetName);
+        return planetSystemsHashMap.get(solarSystemName).getPlanet(planetName);
     }
+
 
     @Override
     public PlanetSystem getPlanetSystem(String solarSystemName) {
-        for (PlanetSystem planetSystem : planetSystemsHashMap.values()) {
-            if (planetSystem.getName().equals(solarSystemName)) {
-                return planetSystem;
-            }
-        }
-        return null;
+       return planetSystemsHashMap.get(solarSystemName);
     }
 
     @Override
@@ -106,11 +113,4 @@ public class UniverseCSVRepository implements IUniverseRepository{
         return  planetSystemsHashMap.values();
     }
 
-    public void /*PlanetSystem*/ getPlanetSystems(String planetSystem) {
-        //return planetSystemsHashMap;
-    }
-
-    public void setPlanetSystems(ArrayList<PlanetSystem> planetSystems) {
-        //this.planetSystems = planetSystems;
-    }
 }

@@ -2,6 +2,7 @@ package Model;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 
 public class UniverseRepository implements IUniverseRepository {
     private ArrayList<PlanetSystem> planetSystems = new ArrayList<>();
@@ -32,7 +33,6 @@ public class UniverseRepository implements IUniverseRepository {
 
         PlanetSystem solarSystem = new PlanetSystem("Solar System", sun, planetList,"https://upload.wikimedia.org/wikipedia/commons/c/c3/Solar_sys8.jpg");
         planetSystems.add(solarSystem);
-        System.out.println("-_-");
     }
 
 
@@ -57,6 +57,7 @@ public class UniverseRepository implements IUniverseRepository {
 
         return null;
     }
+
 
     @Override
     public Collection<PlanetSystem> getAllPlanetSystems() {

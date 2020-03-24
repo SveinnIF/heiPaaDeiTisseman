@@ -2,6 +2,7 @@ package Model;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 
 public interface IUniverseRepository {
     ArrayList<Planet> getAllPlanets(String solarSystemName);

@@ -148,6 +148,6 @@ public class PlanetSystem {
 
     @Override
     public String toString() {
-        return "The star of the " + name + " is " + centerStar.getName() + " and the planets are " + planets;
+        return name + ": " + " Center star is: " + centerStar.getName() + " and the planets are " + planets;
     }
 }
