@@ -32,12 +32,14 @@ public class UniverseCSVRepository implements IUniverseRepository{
         writePlanetToFile("planets.csv",planetSystemsHashMap);
         System.out.println("getAllPlanets: ");
         System.out.println(getAllPlanets("Solar System"));
+        deletePlanet("Solar System", "Earth");
         System.out.println("getPlanet: ");
         System.out.println(getPlanet("Solar System", "Earth"));
         System.out.println("getPlanetSystem: ");
         System.out.println(getPlanetSystem("Solar System"));
         System.out.println("getAllPlanetSystems: ");
         System.out.println(getAllPlanetSystems());
+
 
     }
 
@@ -111,6 +113,21 @@ public class UniverseCSVRepository implements IUniverseRepository{
     @Override
     public Collection<PlanetSystem> getAllPlanetSystems() {
         return  planetSystemsHashMap.values();
+    }
+
+    @Override
+    public Planet createPlanet(String name, double mass, double radius, double semiMajorAxis, double eccentricity, double orbitalPeriod, Star centralCelestialBody, String pictureUrl, PlanetSystem planetSystem) {
+        return null;
+    }
+
+    @Override
+    public Planet updatePlanet() {
+        return null;
+    }
+
+    @Override
+    public void deletePlanet(String planetSystem, String planet) {
+      planetSystemsHashMap.get(planetSystem).getPlanetList().remove(planetSystemsHashMap.get(planetSystem).getPlanet(planet));
     }
 
 }

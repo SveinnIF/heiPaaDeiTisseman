@@ -60,6 +60,21 @@ public class UniverseRepository implements IUniverseRepository {
 
 
     @Override
+    public Planet createPlanet(String name, double mass, double radius, double semiMajorAxis, double eccentricity, double orbitalPeriod, Star centralCelestialBody, String pictureUrl, PlanetSystem planetSystem) {
+        return null;
+    }
+
+    @Override
+    public Planet updatePlanet() {
+        return null;
+    }
+
+    @Override
+    public void deletePlanet(String planetSystem, String planet) {
+
+    }
+
+    @Override
     public Collection<PlanetSystem> getAllPlanetSystems() {
         return planetSystems;
     }
