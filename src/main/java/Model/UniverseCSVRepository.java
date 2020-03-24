@@ -126,7 +126,7 @@ public class UniverseCSVRepository implements IUniverseRepository{
     }
 
     @Override
-    public static void deletePlanet(String planetSystem, String planet) {
+    public void deletePlanet(String planetSystem, String planet) {
       planetSystemsHashMap.get(planetSystem).getPlanetList().remove(planetSystemsHashMap.get(planetSystem).getPlanet(planet));
     }
 

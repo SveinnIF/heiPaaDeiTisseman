@@ -10,6 +10,6 @@ public interface IUniverseRepository {
     PlanetSystem getPlanetSystem(String solarSystemName);
     Collection<PlanetSystem> getAllPlanetSystems();
     void createPlanet(String name, double mass, double radius, double semiMajorAxis, double eccentricity, double orbitalPeriod, Star centralCelestialBody, String pictureUrl, PlanetSystem planetSystem);
-    static void updatePlanet(){}
-    static void deletePlanet(String planetSystem, String planet){}
+    void updatePlanet();
+    void deletePlanet(String planetSystem, String planet);
 }
