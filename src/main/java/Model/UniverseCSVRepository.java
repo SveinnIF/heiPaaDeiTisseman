@@ -113,7 +113,8 @@ public class UniverseCSVRepository implements IUniverseRepository{
     }
 
     @Override
-    public void createPlanet(String name, double mass, double radius, double semiMajorAxis, double eccentricity, double orbitalPeriod, Star centralCelestialBody, String pictureUrl, PlanetSystem planetSystem) {
+    public void createPlanet(String name, double mass, double radius, double semiMajorAxis, double eccentricity, double orbitalPeriod, String pictureUrl, String planetSystem) {
+        planetSystemsHashMap.get(planetSystem).getPlanetList().add(new Planet(name,mass,radius,semiMajorAxis,eccentricity,orbitalPeriod,planetSystemsHashMap.get(planetSystem).getCenterStar(),pictureUrl));
 
     }
 

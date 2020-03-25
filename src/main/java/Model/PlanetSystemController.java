@@ -37,7 +37,7 @@ public class PlanetSystemController {
     }
 
     public void getAllPlanetSystems(Context context) {
-        ArrayList<PlanetSystem> allPlanetSystems = new ArrayList<PlanetSystem>(universeRepository.getAllPlanetSystems());
+        ArrayList<PlanetSystem> allPlanetSystems = new ArrayList<>(universeRepository.getAllPlanetSystems());
         context.json(allPlanetSystems);
     }
 
@@ -60,4 +60,15 @@ public class PlanetSystemController {
         universeRepository.deletePlanet(systemId,planetId);
     }
 
+    public void createPlanet(Context context) {
+        String systemId = context.pathParam(":planet-system-id");
+        String name = context.formParam("name");
+        String mass = context.formParam("mass");
+        String radius = context.formParam("radius");
+        String semiMajorAxis = context.formParam("semiMajorAxis");
+        String eccentricity = context.formParam("eccentricity");
+        String orbitalPeriod = context.formParam("orbitalPeriod");
+        String pictureUrl = context.formParam("pictureUrl");
+        universeRepository.createPlanet(name,Double.parseDouble(mass),Double.parseDouble(radius),Double.parseDouble(semiMajorAxis),Double.parseDouble(eccentricity),Double.parseDouble(orbitalPeriod),pictureUrl,systemId);
+    }
 }
