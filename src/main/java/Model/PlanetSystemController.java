@@ -58,6 +58,7 @@ public class PlanetSystemController {
         String systemId = context.pathParam(":planet-system-id");
         String planetId = context.pathParam(":planet-id");
         universeRepository.deletePlanet(systemId,planetId);
+        context.redirect("/planet-systems/" + systemId);
     }
 
     public void createPlanet(Context context) {
@@ -70,5 +71,20 @@ public class PlanetSystemController {
         String orbitalPeriod = context.formParam("orbitalPeriod");
         String pictureUrl = context.formParam("pictureUrl");
         universeRepository.createPlanet(name,Double.parseDouble(mass),Double.parseDouble(radius),Double.parseDouble(semiMajorAxis),Double.parseDouble(eccentricity),Double.parseDouble(orbitalPeriod),pictureUrl,systemId);
+        context.redirect("/planet-systems/" + systemId);
+    }
+
+    public void updatePlanet(Context context){
+        String systemId = context.pathParam(":planet-system-id");
+        String originalName = context.pathParam("planet-id");
+        String newName = context.formParam("name");
+        String mass = context.formParam("mass");
+        String radius = context.formParam("radius");
+        String semiMajorAxis = context.formParam("semiMajorAxis");
+        String eccentricity = context.formParam("eccentricity");
+        String orbitalPeriod = context.formParam("orbitalPeriod");
+        String pictureUrl = context.formParam("pictureUrl");
+        universeRepository.updatePlanet(originalName, newName,Double.parseDouble(mass),Double.parseDouble(radius),Double.parseDouble(semiMajorAxis),Double.parseDouble(eccentricity),Double.parseDouble(orbitalPeriod),pictureUrl,systemId);
+        context.redirect("/planet-systems/" + systemId);
     }
 }

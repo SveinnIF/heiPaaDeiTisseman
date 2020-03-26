@@ -43,6 +43,10 @@ public abstract class NaturalSatellite extends CelestialBody {
         return centralCelestialBody;
     }
 
+    public void setCentralCelestialBody(Star centralCelestialBody) {
+        this.centralCelestialBody = centralCelestialBody;
+    }
+
     public double distanceToCentralBody(double degrees, String unit) {
         double phi = degrees;
         if (unit.equals("deg")) {

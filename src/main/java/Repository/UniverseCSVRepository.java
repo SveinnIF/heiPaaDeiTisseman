@@ -1,14 +1,28 @@
-package Model;
+package Repository;
+
+import Model.IUniverseRepository;
+import Model.Planet;
+import Model.PlanetSystem;
+import Model.Star;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
-public class UniverseCSVRepository implements IUniverseRepository{
-    //private ArrayList<PlanetSystem> planetSystems = new ArrayList<>();
+public class UniverseCSVRepository implements IUniverseRepository {
     HashMap<String, PlanetSystem> planetSystemsHashMap = new HashMap<>();
     public UniverseCSVRepository(){
+
+        Star kepler11 = new Star("Kepler-11",1.889E30,710310,5680,"https://upload.wikimedia.org/wikipedia/commons/6/64/Kepler11.png");
+        ArrayList<Planet> keplerList = new ArrayList<>();
+        keplerList.add(new Planet("Kepler-11b",2.56796E25,12550,1.36134E7,0.045,10,kepler11,"https://asd.gsfc.nasa.gov/blueshift/wp-content/uploads/2015/07/PIA19562-Ceres-DwarfPlanet-Dawn-RC3-image19-20150506.jpg"));
+        keplerList.add(new Planet("Kepler-11c",8.0622E25,20068,1.5857E7,0.026,13,kepler11,"https://asd.gsfc.nasa.gov/blueshift/wp-content/uploads/2015/07/PIA19562-Ceres-DwarfPlanet-Dawn-RC3-image19-20150506.jpg"));
+        keplerList.add(new Planet("Kepler-11d",3.64292E25,21852,2.3786E7,0.004,22,kepler11,"https://asd.gsfc.nasa.gov/blueshift/wp-content/uploads/2015/07/PIA19562-Ceres-DwarfPlanet-Dawn-RC3-image19-20150506.jpg"));
+        keplerList.add(new Planet("Kepler-11e",5.01648E25,28796,2.9021E7,0.012,31,kepler11,"https://asd.gsfc.nasa.gov/blueshift/wp-content/uploads/2015/07/PIA19562-Ceres-DwarfPlanet-Dawn-RC3-image19-20150506.jpg"));
+        keplerList.add(new Planet("Kepler-11f",1.37356E25,16628,3.7399E7,0.013,36,kepler11,"https://asd.gsfc.nasa.gov/blueshift/wp-content/uploads/2015/07/PIA19562-Ceres-DwarfPlanet-Dawn-RC3-image19-20150506.jpg"));
+        keplerList.add(new Planet("Kepler-11g",1.7916E27,23317,6.9114E7,0.015,118,kepler11,"https://asd.gsfc.nasa.gov/blueshift/wp-content/uploads/2015/07/PIA19562-Ceres-DwarfPlanet-Dawn-RC3-image19-20150506.jpg"));
+        PlanetSystem keplerSystem = new PlanetSystem("Kepler-System", kepler11,keplerList,"https://upload.wikimedia.org/wikipedia/commons/6/64/Kepler11.png");
 
         Star sun = new Star("The Sun", 1.9885E30, 695342, 5777, "https://en.wikipedia.org/wiki/Sun#/media/File:Sun_white.jpg");
         ArrayList<Planet> planetList = new ArrayList<>();
@@ -24,12 +38,14 @@ public class UniverseCSVRepository implements IUniverseRepository{
         PlanetSystem solarSystem = new PlanetSystem("Solar System", sun, planetList, "https://upload.wikimedia.org/wikipedia/commons/c/c3/Solar_sys8.jpg");
 
         planetSystemsHashMap.put("Solar System", solarSystem);
+        planetSystemsHashMap.put("Kepler-System",keplerSystem);
 
         ArrayList<PlanetSystem> readPlanets = readPlanetFromFile("planets_100.csv");
         System.out.println("planets read from file: ");
         System.out.println(readPlanets);
         System.out.println("////end of planets read from file////");
         writePlanetToFile("planets.csv",planetSystemsHashMap);
+
 //        System.out.println("getAllPlanets: ");
 //        System.out.println(getAllPlanets("Solar System"));
 //        //deletePlanet("Solar System", "Earth");
@@ -115,17 +131,20 @@ public class UniverseCSVRepository implements IUniverseRepository{
     @Override
     public void createPlanet(String name, double mass, double radius, double semiMajorAxis, double eccentricity, double orbitalPeriod, String pictureUrl, String planetSystem) {
         planetSystemsHashMap.get(planetSystem).getPlanetList().add(new Planet(name,mass,radius,semiMajorAxis,eccentricity,orbitalPeriod,planetSystemsHashMap.get(planetSystem).getCenterStar(),pictureUrl));
-
+        writePlanetToFile("planets.csv",planetSystemsHashMap);
     }
+    
 
     @Override
-    public void updatePlanet() {
-
+    public void updatePlanet(String originalName,String newName, double mass, double radius, double semiMajorAxis, double eccentricity, double orbitalPeriod, String pictureUrl, String planetSystem) {
+        planetSystemsHashMap.get(planetSystem).getPlanet(originalName).setAll(newName, mass, radius, semiMajorAxis, eccentricity, orbitalPeriod, planetSystemsHashMap.get(planetSystem).getCenterStar() , pictureUrl);
+        writePlanetToFile("planets.csv",planetSystemsHashMap);
     }
 
     @Override
     public void deletePlanet(String planetSystem, String planet) {
       planetSystemsHashMap.get(planetSystem).getPlanetList().remove(planetSystemsHashMap.get(planetSystem).getPlanet(planet));
+        writePlanetToFile("planets.csv",planetSystemsHashMap);
     }
 
 }

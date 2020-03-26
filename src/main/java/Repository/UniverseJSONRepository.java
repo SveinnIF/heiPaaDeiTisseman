@@ -1,12 +1,16 @@
-package Model;
+package Repository;
 
+import Model.IUniverseRepository;
+import Model.Planet;
+import Model.PlanetSystem;
+import Model.Star;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
-public class UniverseJSONRepository implements IUniverseRepository{
+public class UniverseJSONRepository implements IUniverseRepository {
 
     private ArrayList<PlanetSystem> planetSystems = new ArrayList<>();
    private List<Planet> planetList = new ArrayList<>();
@@ -89,7 +93,7 @@ public class UniverseJSONRepository implements IUniverseRepository{
     }
 
     @Override
-    public void updatePlanet() {
+    public void updatePlanet(String originalName,String newName, double mass, double radius, double semiMajorAxis, double eccentricity, double orbitalPeriod, String pictureUrl, String planetSystem) {
 
     }
 

@@ -1,4 +1,9 @@
-package Model;
+package Repository;
+
+import Model.IUniverseRepository;
+import Model.Planet;
+import Model.PlanetSystem;
+import Model.Star;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -8,14 +13,7 @@ public class UniverseRepository implements IUniverseRepository {
     private ArrayList<PlanetSystem> planetSystems = new ArrayList<>();
 
     public UniverseRepository() {
-//        Star kepler11 = new Star("Kepler-11",1.889E30,710310,5680,"https://upload.wikimedia.org/wikipedia/commons/6/64/Kepler11.png");
-//        ArrayList<Planet> keplerList = new ArrayList<>();
-//        keplerList.add(new Planet("Kepler-11b",2.56796E25,12550,1.36134E7,0.045,10,kepler11,"https://asd.gsfc.nasa.gov/blueshift/wp-content/uploads/2015/07/PIA19562-Ceres-DwarfPlanet-Dawn-RC3-image19-20150506.jpg"));
-//        keplerList.add(new Planet("Kepler-11c",8.0622E25,20068,1.5857E7,0.026,13,kepler11,"https://asd.gsfc.nasa.gov/blueshift/wp-content/uploads/2015/07/PIA19562-Ceres-DwarfPlanet-Dawn-RC3-image19-20150506.jpg"));
-//        keplerList.add(new Planet("Kepler-11d",3.64292E25,21852,2.3786E7,0.004,22,kepler11,"https://asd.gsfc.nasa.gov/blueshift/wp-content/uploads/2015/07/PIA19562-Ceres-DwarfPlanet-Dawn-RC3-image19-20150506.jpg"));
-//        keplerList.add(new Planet("Kepler-11e",5.01648E25,28796,2.9021E7,0.012,31,kepler11,"https://asd.gsfc.nasa.gov/blueshift/wp-content/uploads/2015/07/PIA19562-Ceres-DwarfPlanet-Dawn-RC3-image19-20150506.jpg"));
-//        keplerList.add(new Planet("Kepler-11f",1.37356E25,16628,3.7399E7,0.013,36,kepler11,"https://asd.gsfc.nasa.gov/blueshift/wp-content/uploads/2015/07/PIA19562-Ceres-DwarfPlanet-Dawn-RC3-image19-20150506.jpg"));
-//        keplerList.add(new Planet("Kepler-11g",1.7916E27,23317,6.9114E7,0.015,118,kepler11,"https://asd.gsfc.nasa.gov/blueshift/wp-content/uploads/2015/07/PIA19562-Ceres-DwarfPlanet-Dawn-RC3-image19-20150506.jpg"));
+
 
 
 
@@ -65,7 +63,7 @@ public class UniverseRepository implements IUniverseRepository {
     }
 
     @Override
-    public void updatePlanet() {
+    public void updatePlanet(String originalName,String newName, double mass, double radius, double semiMajorAxis, double eccentricity, double orbitalPeriod, String pictureUrl, String planetSystem) {
 
     }
 

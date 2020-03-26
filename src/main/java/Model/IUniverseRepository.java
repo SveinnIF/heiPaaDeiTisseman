@@ -2,7 +2,6 @@ package Model;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 
 public interface IUniverseRepository {
     ArrayList<Planet> getAllPlanets(String solarSystemName);
@@ -10,6 +9,6 @@ public interface IUniverseRepository {
     PlanetSystem getPlanetSystem(String solarSystemName);
     Collection<PlanetSystem> getAllPlanetSystems();
     void createPlanet(String name, double mass, double radius, double semiMajorAxis, double eccentricity, double orbitalPeriod, String pictureUrl, String planetSystem);
-    void updatePlanet();
+    void updatePlanet(String originalName,String newName, double mass, double radius, double semiMajorAxis, double eccentricity, double orbitalPeriod, String pictureUrl, String planetSystem);
     void deletePlanet(String planetSystem, String planet);
 }
