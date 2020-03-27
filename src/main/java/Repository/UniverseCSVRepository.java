@@ -16,8 +16,11 @@ import java.util.concurrent.TimeUnit;
 public class UniverseCSVRepository implements IUniverseRepository {
     HashMap<String, PlanetSystem> planetSystemsHashMap = new HashMap<>();
     private File fileName;
+    private ExecutorService executorService;
+
     public UniverseCSVRepository(String fileName){
         this.fileName = new File(fileName);
+        this.executorService = Executors.newFixedThreadPool(1);
 
         Star kepler11 = new Star("Kepler-11",1.889E30,710310,5680,"https://upload.wikimedia.org/wikipedia/commons/6/64/Kepler11.png");
         ArrayList<Planet> keplerList = new ArrayList<>();
@@ -45,9 +48,8 @@ public class UniverseCSVRepository implements IUniverseRepository {
         planetSystemsHashMap.put("Solar System", solarSystem);
         planetSystemsHashMap.put("Kepler-System",keplerSystem);
 
-        ArrayList<PlanetSystem> readPlanets = readPlanetFromFile(new File(fileName));
         System.out.println("planets read from file: ");
-        System.out.println(readPlanets);
+        System.out.println(readPlanetFromFile());
         System.out.println("////end of planets read from file////");
 
 
@@ -63,40 +65,45 @@ public class UniverseCSVRepository implements IUniverseRepository {
     }
 
 
+    public void asyncWritePlanetToFile(){
+        executorService.submit(() -> writePlanetToFile());
+    }
 
-    public  ArrayList<PlanetSystem> readPlanetFromFile(File file) {
-        HashMap<String, PlanetSystem> planetsFromFile = new HashMap<>();
+    public synchronized ArrayList<PlanetSystem> readPlanetFromFile() {
 
-        try{
-            BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
-            String line;
+            HashMap<String, PlanetSystem> planetsFromFile = new HashMap<>();
 
-            while ((line = bufferedReader.readLine()) != null) {
+            try {
+                BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
+                String line;
 
-                String[] splitter = line.split(",");
+                while ((line = bufferedReader.readLine()) != null) {
 
-                if (!planetsFromFile.containsKey(splitter[0])) {
-                    planetsFromFile.put(splitter[0], new PlanetSystem(splitter[0], new Star(splitter[2], Double.parseDouble(splitter[3]),
-                            Double.parseDouble(splitter[4]), Double.parseDouble(splitter[5]), splitter[6]), new ArrayList<>(), splitter[1]));
+                    String[] splitter = line.split(",");
+
+                    if (!planetsFromFile.containsKey(splitter[0])) {
+                        planetsFromFile.put(splitter[0], new PlanetSystem(splitter[0], new Star(splitter[2], Double.parseDouble(splitter[3]),
+                                Double.parseDouble(splitter[4]), Double.parseDouble(splitter[5]), splitter[6]), new ArrayList<>(), splitter[1]));
+                    }
+                    planetsFromFile.get(splitter[0]).getPlanetList().add(new Planet(splitter[7], Double.parseDouble(splitter[8]), Double.parseDouble(splitter[9]),
+                            Double.parseDouble(splitter[10]), Double.parseDouble(splitter[11]), Double.parseDouble(splitter[12]), planetsFromFile.get(splitter[0]).getCenterStar(), splitter[13]));
                 }
-                planetsFromFile.get(splitter[0]).getPlanetList().add(new Planet(splitter[7], Double.parseDouble(splitter[8]), Double.parseDouble(splitter[9]),
-                        Double.parseDouble(splitter[10]), Double.parseDouble(splitter[11]), Double.parseDouble(splitter[12]), planetsFromFile.get(splitter[0]).getCenterStar(), splitter[13]));
-            }
 
-        } catch (FileNotFoundException fnfe) {
-            System.out.println(fnfe.getMessage());
-        } catch (IOException ioexc) {
-            System.out.println(ioexc.getLocalizedMessage());
-        }
-        return new ArrayList<>(planetsFromFile.values());
+            } catch (FileNotFoundException fnfe) {
+                System.out.println(fnfe.getMessage());
+            } catch (IOException ioexc) {
+                System.out.println(ioexc.getLocalizedMessage());
+            }
+            return new ArrayList<>(planetsFromFile.values());
+
     }
 
 
-    public  void writePlanetToFile(File file, HashMap<String,PlanetSystem> planetSystems){
+    public synchronized void writePlanetToFile(){
         try{
-            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fileName));
 
-            for (PlanetSystem planetSystem : planetSystems.values()) {
+            for (PlanetSystem planetSystem : planetSystemsHashMap.values()) {
                 ArrayList<Planet> planets = planetSystem.getPlanets();
                 for (Planet planet : planets) {
                     String line = planetSystem.getName() + "," + planetSystem.getPictureUrl() + "," + planetSystem.getCenterStar().getName() + "," + planetSystem.getCenterStar().getMass() +
@@ -109,7 +116,7 @@ public class UniverseCSVRepository implements IUniverseRepository {
             }
             bufferedWriter.flush();
         } catch (FileNotFoundException fnfe) {
-        System.out.println(fnfe.getMessage());
+            System.out.println(fnfe.getMessage());
         } catch (IOException ioexc) {
             System.out.println(ioexc.getLocalizedMessage());
         }
@@ -139,20 +146,20 @@ public class UniverseCSVRepository implements IUniverseRepository {
     @Override
     public void createPlanet(String name, double mass, double radius, double semiMajorAxis, double eccentricity, double orbitalPeriod, String pictureUrl, String planetSystem) {
         planetSystemsHashMap.get(planetSystem).getPlanetList().add(new Planet(name,mass,radius,semiMajorAxis,eccentricity,orbitalPeriod,planetSystemsHashMap.get(planetSystem).getCenterStar(),pictureUrl));
-        writePlanetToFile(fileName,planetSystemsHashMap);
+        writePlanetToFile();
     }
 
 
     @Override
     public void updatePlanet(String originalName,String newName, double mass, double radius, double semiMajorAxis, double eccentricity, double orbitalPeriod, String pictureUrl, String planetSystem) {
         planetSystemsHashMap.get(planetSystem).getPlanet(originalName).setAll(newName, mass, radius, semiMajorAxis, eccentricity, orbitalPeriod, planetSystemsHashMap.get(planetSystem).getCenterStar() , pictureUrl);
-        writePlanetToFile(fileName,planetSystemsHashMap);
+        writePlanetToFile();
     }
 
     @Override
     public void deletePlanet(String planetSystem, String planet) {
       planetSystemsHashMap.get(planetSystem).getPlanetList().remove(planetSystemsHashMap.get(planetSystem).getPlanet(planet));
-        writePlanetToFile(fileName,planetSystemsHashMap);
+        writePlanetToFile();
     }
 
 }
