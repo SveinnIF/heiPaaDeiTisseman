@@ -14,7 +14,7 @@ public class UniverseJSONRepository implements IUniverseRepository {
 
     private ArrayList<PlanetSystem> planetSystems = new ArrayList<>();
    private List<Planet> planetList = new ArrayList<>();
-    public UniverseJSONRepository(){
+    public UniverseJSONRepository(String file){
         Star sun = new Star("The Sun", 1.9885E30, 695342, 5777, "https://upload.wikimedia.org/wikipedia/commons/c/c3/Solar_sys8.jpg");
         ArrayList<Planet> planetList = new ArrayList<>();
         planetList.add(new Planet("Mercury", 3.283E23, 2439.7, 0.387, 0.206, 88, sun, "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Transit_Of_Mercury%2C_May_9th%2C_2016.png/480px-Transit_Of_Mercury%2C_May_9th%2C_2016.png"));
@@ -28,7 +28,7 @@ public class UniverseJSONRepository implements IUniverseRepository {
 
         PlanetSystem solarSystem = new PlanetSystem("Solar System", sun, planetList, "https://upload.wikimedia.org/wikipedia/commons/c/c3/Solar_sys8.jpg");
         planetSystems.add(solarSystem);
-        writeToFile("planets.json",planetSystems);
+        writeToFile(file,planetSystems);
 
         List<PlanetSystem> readPlanets = readFromFile("planets.json");
         System.out.println("planets read from JSON: ");

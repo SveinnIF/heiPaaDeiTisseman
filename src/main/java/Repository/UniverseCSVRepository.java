@@ -9,10 +9,15 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class UniverseCSVRepository implements IUniverseRepository {
     HashMap<String, PlanetSystem> planetSystemsHashMap = new HashMap<>();
-    public UniverseCSVRepository(String file){
+    private File fileName;
+    public UniverseCSVRepository(String fileName){
+        this.fileName = new File(fileName);
 
         Star kepler11 = new Star("Kepler-11",1.889E30,710310,5680,"https://upload.wikimedia.org/wikipedia/commons/6/64/Kepler11.png");
         ArrayList<Planet> keplerList = new ArrayList<>();
@@ -40,11 +45,11 @@ public class UniverseCSVRepository implements IUniverseRepository {
         planetSystemsHashMap.put("Solar System", solarSystem);
         planetSystemsHashMap.put("Kepler-System",keplerSystem);
 
-        ArrayList<PlanetSystem> readPlanets = readPlanetFromFile("planets_100.csv");
+        ArrayList<PlanetSystem> readPlanets = readPlanetFromFile(new File(fileName));
         System.out.println("planets read from file: ");
         System.out.println(readPlanets);
         System.out.println("////end of planets read from file////");
-        writePlanetToFile(file,planetSystemsHashMap);
+
 
 //        System.out.println("getAllPlanets: ");
 //        System.out.println(getAllPlanets("Solar System"));
@@ -57,7 +62,9 @@ public class UniverseCSVRepository implements IUniverseRepository {
 //        System.out.println(getAllPlanetSystems());
     }
 
-    public static ArrayList<PlanetSystem> readPlanetFromFile(String file) {
+
+
+    public  ArrayList<PlanetSystem> readPlanetFromFile(File file) {
         HashMap<String, PlanetSystem> planetsFromFile = new HashMap<>();
 
         try{
@@ -84,7 +91,8 @@ public class UniverseCSVRepository implements IUniverseRepository {
         return new ArrayList<>(planetsFromFile.values());
     }
 
-    public void writePlanetToFile(String file, HashMap<String,PlanetSystem> planetSystems){
+
+    public  void writePlanetToFile(File file, HashMap<String,PlanetSystem> planetSystems){
         try{
             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));
 
@@ -131,20 +139,20 @@ public class UniverseCSVRepository implements IUniverseRepository {
     @Override
     public void createPlanet(String name, double mass, double radius, double semiMajorAxis, double eccentricity, double orbitalPeriod, String pictureUrl, String planetSystem) {
         planetSystemsHashMap.get(planetSystem).getPlanetList().add(new Planet(name,mass,radius,semiMajorAxis,eccentricity,orbitalPeriod,planetSystemsHashMap.get(planetSystem).getCenterStar(),pictureUrl));
-        writePlanetToFile("planets.csv",planetSystemsHashMap);
+        writePlanetToFile(fileName,planetSystemsHashMap);
     }
 
 
     @Override
     public void updatePlanet(String originalName,String newName, double mass, double radius, double semiMajorAxis, double eccentricity, double orbitalPeriod, String pictureUrl, String planetSystem) {
         planetSystemsHashMap.get(planetSystem).getPlanet(originalName).setAll(newName, mass, radius, semiMajorAxis, eccentricity, orbitalPeriod, planetSystemsHashMap.get(planetSystem).getCenterStar() , pictureUrl);
-        writePlanetToFile("planets.csv",planetSystemsHashMap);
+        writePlanetToFile(fileName,planetSystemsHashMap);
     }
 
     @Override
     public void deletePlanet(String planetSystem, String planet) {
       planetSystemsHashMap.get(planetSystem).getPlanetList().remove(planetSystemsHashMap.get(planetSystem).getPlanet(planet));
-        writePlanetToFile("planets.csv",planetSystemsHashMap);
+        writePlanetToFile(fileName,planetSystemsHashMap);
     }
 
 }

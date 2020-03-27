@@ -85,6 +85,6 @@ public class PlanetSystemController {
         String orbitalPeriod = context.formParam("orbitalPeriod");
         String pictureUrl = context.formParam("pictureUrl");
         universeRepository.updatePlanet(originalName, newName,Double.parseDouble(mass),Double.parseDouble(radius),Double.parseDouble(semiMajorAxis),Double.parseDouble(eccentricity),Double.parseDouble(orbitalPeriod),pictureUrl,systemId);
-        context.redirect("/planet-systems/" + systemId +"/planets/"+ newName);
+        context.redirect("/planet-systems/" + systemId +"/planets/"+ newName); //bedre å context.redirect("/planet-systems/" + systemId); fordi da må du ikke ta backspace gjennom alt sammen også refreshe siden, burde være en knapp for det. kanskje jeg har gjort noe galt også, jeg er ikke spesielt smart
     }
 }

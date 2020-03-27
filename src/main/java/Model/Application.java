@@ -32,6 +32,6 @@ public class Application {
 
         app.get("/", ctx -> ctx.result("Hello, world"));
 
-        UniverseJSONRepository universeJSONRepository = new UniverseJSONRepository();
+        UniverseJSONRepository universeJSONRepository = new UniverseJSONRepository("planets.json");
     }
 }
