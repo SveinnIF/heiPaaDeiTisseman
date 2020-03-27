@@ -85,6 +85,6 @@ public class PlanetSystemController {
         String orbitalPeriod = context.formParam("orbitalPeriod");
         String pictureUrl = context.formParam("pictureUrl");
         universeRepository.updatePlanet(originalName, newName,Double.parseDouble(mass),Double.parseDouble(radius),Double.parseDouble(semiMajorAxis),Double.parseDouble(eccentricity),Double.parseDouble(orbitalPeriod),pictureUrl,systemId);
-        context.redirect("/planet-systems/" + systemId);
+        context.redirect("/planet-systems/" + systemId +"/planets/"+ newName);
     }
 }

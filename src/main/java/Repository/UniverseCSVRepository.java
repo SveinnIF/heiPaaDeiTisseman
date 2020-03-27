@@ -12,7 +12,7 @@ import java.util.HashMap;
 
 public class UniverseCSVRepository implements IUniverseRepository {
     HashMap<String, PlanetSystem> planetSystemsHashMap = new HashMap<>();
-    public UniverseCSVRepository(){
+    public UniverseCSVRepository(String file){
 
         Star kepler11 = new Star("Kepler-11",1.889E30,710310,5680,"https://upload.wikimedia.org/wikipedia/commons/6/64/Kepler11.png");
         ArrayList<Planet> keplerList = new ArrayList<>();
@@ -44,7 +44,7 @@ public class UniverseCSVRepository implements IUniverseRepository {
         System.out.println("planets read from file: ");
         System.out.println(readPlanets);
         System.out.println("////end of planets read from file////");
-        writePlanetToFile("planets.csv",planetSystemsHashMap);
+        writePlanetToFile(file,planetSystemsHashMap);
 
 //        System.out.println("getAllPlanets: ");
 //        System.out.println(getAllPlanets("Solar System"));
@@ -133,7 +133,7 @@ public class UniverseCSVRepository implements IUniverseRepository {
         planetSystemsHashMap.get(planetSystem).getPlanetList().add(new Planet(name,mass,radius,semiMajorAxis,eccentricity,orbitalPeriod,planetSystemsHashMap.get(planetSystem).getCenterStar(),pictureUrl));
         writePlanetToFile("planets.csv",planetSystemsHashMap);
     }
-    
+
 
     @Override
     public void updatePlanet(String originalName,String newName, double mass, double radius, double semiMajorAxis, double eccentricity, double orbitalPeriod, String pictureUrl, String planetSystem) {

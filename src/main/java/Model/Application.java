@@ -19,7 +19,7 @@ public class Application {
         app.get("/planet-systems/:planet-system-id/planets/:planet-id", new VueComponent("planet-detail"));
         app.get("/planet-systems/:planet-system-id/planets/:planet-id/update", new VueComponent("planet-update"));
 
-        UniverseCSVRepository PlanetSystemRepository = new UniverseCSVRepository();
+        UniverseCSVRepository PlanetSystemRepository = new UniverseCSVRepository("planets.csv");
         PlanetSystemController planetSystemController = new PlanetSystemController(PlanetSystemRepository);
 
         app.get("/api/planet-systems/:planet-system-id", planetSystemController::getSinglePlanetSystem);
