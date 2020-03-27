@@ -19,8 +19,8 @@ public class Application {
         app.get("/planet-systems/:planet-system-id/planets/:planet-id", new VueComponent("planet-detail"));
         app.get("/planet-systems/:planet-system-id/planets/:planet-id/update", new VueComponent("planet-update"));
 
-        UniverseCSVRepository PlanetSystemRepository = new UniverseCSVRepository("planets.csv");
-        PlanetSystemController planetSystemController = new PlanetSystemController(PlanetSystemRepository);
+        UniverseCSVRepository planetSystemRepository = new UniverseCSVRepository("planets.csv");
+        PlanetSystemController planetSystemController = new PlanetSystemController(planetSystemRepository);
 
         app.get("/api/planet-systems/:planet-system-id", planetSystemController::getSinglePlanetSystem);
         app.get("/api/planet-systems/", planetSystemController::getAllPlanetSystems);
@@ -33,5 +33,9 @@ public class Application {
         app.get("/", ctx -> ctx.result("Hello, world"));
 
         UniverseJSONRepository universeJSONRepository = new UniverseJSONRepository("planets.json");
+
+
+        Runtime.getRuntime().addShutdownHook(new Thread(app::stop));
+        app.events(event -> event.serverStopped(planetSystemRepository::cleanup));
     }
 }

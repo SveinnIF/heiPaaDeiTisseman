@@ -15,11 +15,11 @@ import java.util.concurrent.TimeUnit;
 
 public class UniverseCSVRepository implements IUniverseRepository {
     HashMap<String, PlanetSystem> planetSystemsHashMap = new HashMap<>();
-    private File fileName;
+    private File file;
     private ExecutorService executorService;
 
     public UniverseCSVRepository(String fileName){
-        this.fileName = new File(fileName);
+        this.file = new File(fileName);
         this.executorService = Executors.newFixedThreadPool(1);
 
         Star kepler11 = new Star("Kepler-11",1.889E30,710310,5680,"https://upload.wikimedia.org/wikipedia/commons/6/64/Kepler11.png");
@@ -65,8 +65,8 @@ public class UniverseCSVRepository implements IUniverseRepository {
     }
 
 
-    public void asyncWritePlanetToFile(){
-        executorService.submit(() -> writePlanetToFile());
+    public void writePlanetToFile(){
+        executorService.submit(() -> syncWritePlanetToFile());
     }
 
     public synchronized ArrayList<PlanetSystem> readPlanetFromFile() {
@@ -74,7 +74,7 @@ public class UniverseCSVRepository implements IUniverseRepository {
             HashMap<String, PlanetSystem> planetsFromFile = new HashMap<>();
 
             try {
-                BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
+                BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
                 String line;
 
                 while ((line = bufferedReader.readLine()) != null) {
@@ -99,9 +99,9 @@ public class UniverseCSVRepository implements IUniverseRepository {
     }
 
 
-    public synchronized void writePlanetToFile(){
+    public synchronized void syncWritePlanetToFile(){
         try{
-            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fileName));
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));
 
             for (PlanetSystem planetSystem : planetSystemsHashMap.values()) {
                 ArrayList<Planet> planets = planetSystem.getPlanets();
@@ -120,6 +120,12 @@ public class UniverseCSVRepository implements IUniverseRepository {
         } catch (IOException ioexc) {
             System.out.println(ioexc.getLocalizedMessage());
         }
+    }
+
+    public void cleanup() throws InterruptedException {
+        executorService.shutdown();
+
+        executorService.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
     }
 
 
